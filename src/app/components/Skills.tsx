@@ -11,13 +11,13 @@ const skills = [
   {
     icon: Server,
     title: 'Backend Development',
-    description: 'Node.js, Python, REST APIs, GraphQL',
+    description: 'Node.js, Python, REST APIs, WebSockets, WordPress, Laravel, Symfony',
     color: 'text-chart-2'
   },
   {
     icon: Database,
     title: 'Datenbanken',
-    description: 'PostgreSQL, MongoDB, Redis, Supabase',
+    description: 'MySQL, MongoDB, MariaDB, Redis, SQLite',
     color: 'text-chart-3'
   },
   {
@@ -29,13 +29,13 @@ const skills = [
   {
     icon: Globe,
     title: 'Web Technologies',
-    description: 'HTML5, CSS3, JavaScript, WebAssembly',
+    description: 'HTML5, CSS3, JavaScript, PHP',
     color: 'text-chart-5'
   },
   {
     icon: GitBranch,
     title: 'DevOps & Tools',
-    description: 'Git, Docker, CI/CD, AWS, Vercel',
+    description: 'Git, Docker, CI/CD, GitHub Actions',
     color: 'text-chart-1'
   }
 ];

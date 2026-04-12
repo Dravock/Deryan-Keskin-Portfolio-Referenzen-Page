@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Mail, Linkedin, Phone } from 'lucide-react';
+import { Mail, Linkedin, Phone, Github } from 'lucide-react';
 
 const socialLinks = [
   {
@@ -19,6 +19,12 @@ const socialLinks = [
     label: 'LinkedIn',
     href: 'https://linkedin.com',
     text: 'LinkedIn Profil'
+  },
+  {
+    icon: Github,
+    label: 'GitHub',
+    href: 'https://github.com/Dravock',
+    text: 'GitHub/Dravock'
   }
 ];
 
