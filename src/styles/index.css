@@ -5,11 +5,16 @@
 #root {
   height: 100vh;
   overflow-y: scroll;
-  scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
 
-section {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+@media (min-width: 1024px) {
+  #root {
+    scroll-snap-type: y mandatory;
+  }
+
+  section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
 }
