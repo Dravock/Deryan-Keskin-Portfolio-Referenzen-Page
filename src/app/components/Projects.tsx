@@ -54,22 +54,17 @@ const projects = [
   },
   {
     title: 'WordPress Plugins',
-    description: 'Mehrere eigenständige Plugins für WordPress und WooCommerce entwickelt – von der Terminbuchung über interne Entwicklerwerkzeuge bis hin zur Shop-Erweiterung.',
+    description: 'Mehrere eigenständige Plugins für WordPress und WooCommerce entwickelt: Appointment System (Terminbuchung mit Kalenderansicht), BugNotes (Bug- & Notizverwaltung im Backend) sowie ein WooCommerce Companion mit erweiterten Filtern, Custom Checkout-Feldern und Bestellstatistiken.',
     image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
     tags: ['WordPress', 'WooCommerce', 'PHP', 'JavaScript', 'MySQL'],
-    plugins: [
-      { name: 'Appointment System', desc: 'Terminbuchung mit Kalenderansicht, E-Mail-Benachrichtigungen und Admin-Dashboard.' },
-      { name: 'BugNotes', desc: 'Bug- & Notizverwaltung direkt im WordPress-Backend mit Priorisierung und Kommentarfunktion.' },
-      { name: 'WooCommerce Companion', desc: 'Shop-Erweiterung mit erweiterten Filtern, Custom Checkout-Feldern und Bestellstatistiken.' }
-    ],
     liveLink: '',
     sourceLink: ''
   },
   {
-    title: 'Kommt bald',
-    description: 'Dieses Projekt befindet sich noch in Arbeit. Hier wird bald ein weiteres Projekt vorgestellt.',
-    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
-    tags: ['In Arbeit'],
+    title: 'KI-Infrastruktur & Agentic OS',
+    description: 'Selbst gehosteter Linux-Server mit eigenem LLM-Stack (OpenClaw) sowie einem Netzwerk spezialisierter KI-Agenten: automatisches Postfach-Tracking, Social-Media-Management, Kalender­verwaltung, Task-Automatisierung und vieles mehr – alles lokal, privat und vollständig unter eigener Kontrolle.',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+    tags: ['Linux', 'LLM', 'OpenClaw', 'AI Agents', 'Self-hosted', 'Automation'],
     liveLink: '',
     sourceLink: ''
   }
@@ -156,15 +151,6 @@ export function Projects() {
                             </span>
                           ))}
                         </div>
-                        {'plugins' in project && project.plugins && (
-                          <ul className="mb-4 space-y-1">
-                            {project.plugins.map((p) => (
-                              <li key={p.name} className="text-[14px] text-muted-foreground">
-                                <span className="font-medium text-foreground">{p.name}:</span> {p.desc}
-                              </li>
-                            ))}
-                          </ul>
-                        )}
                         <div className="flex gap-4">
                           {project.liveLink && (
                             <a href={project.liveLink} className="inline-flex items-center gap-2 text-primary hover:underline cursor-pointer">

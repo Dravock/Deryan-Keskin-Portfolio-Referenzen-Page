@@ -6,6 +6,7 @@ import { Skills } from './components/Skills';
 import { Projects } from './components/Projects';
 import { Contact } from './components/Contact';
 import { CursorEffect } from './components/CursorEffect';
+import { ScrollToTop } from './components/ScrollToTop';
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -30,6 +31,7 @@ export default function App() {
   return (
     <div className="min-h-screen">
       {sparks && <CursorEffect />}
+      <ScrollToTop />
       <Navigation
         darkMode={darkMode}
         onDarkModeChange={setDarkMode}

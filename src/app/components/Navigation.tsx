@@ -20,12 +20,14 @@ export function Navigation({ darkMode, onDarkModeChange, sparks, onSparksChange 
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
+    const root = document.getElementById('root');
+    if (!root) return;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(root.scrollTop > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    root.addEventListener('scroll', handleScroll);
+    return () => root.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
@@ -47,7 +49,7 @@ export function Navigation({ darkMode, onDarkModeChange, sparks, onSparksChange 
             whileHover={{ scale: 1.05 }}
             onClick={(e) => {
               e.preventDefault();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              document.getElementById('root')?.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           >
             DK
