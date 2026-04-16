@@ -5,19 +5,19 @@ const skills = [
   {
     icon: Code2,
     title: 'Frontend Development',
-    description: 'React, TypeScript, Next.js, Tailwind CSS',
+    description: 'HTML5, CSS3, JavaScript, TypeScript, React, Next.js, Tailwind CSS',
     color: 'text-chart-1'
   },
   {
     icon: Server,
     title: 'Backend Development',
-    description: 'Node.js, Python, REST APIs, WebSockets, WordPress, Laravel, Symfony',
+    description: 'PHP,Node.js, Python, REST APIs, WebSockets, WordPress, Laravel, Symfony',
     color: 'text-chart-2'
   },
   {
     icon: Database,
     title: 'Datenbanken',
-    description: 'MySQL, MongoDB, MariaDB, Redis, SQLite',
+    description: 'MySQL, MongoDB, MariaDB, SQLite',
     color: 'text-chart-3'
   },
   {
@@ -28,8 +28,8 @@ const skills = [
   },
   {
     icon: Globe,
-    title: 'Web Technologies',
-    description: 'HTML5, CSS3, JavaScript, PHP',
+    title: 'KI, Cloud & Administration',
+    description: 'Künstliche Intelligenz, Cloud Computing, Google Cloud, Linux-Serveradministration',
     color: 'text-chart-5'
   },
   {

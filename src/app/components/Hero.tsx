@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { ArrowDown } from 'lucide-react';
+import './../../styles/hero-gradient.css';
 
 export function Hero() {
   return (
@@ -11,7 +12,7 @@ export function Hero() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="mb-6 text-[56px] leading-tight">
-            Hallo, ich bin Deryan Keskin
+            Hallo, ich bin <span className="hero-gradient">Deryan Keskin</span>
           </h1>
           <p className="text-[24px] text-muted-foreground mb-8">
             Softwareentwickler mit Leidenschaft für cleanen Code und innovative Lösungen

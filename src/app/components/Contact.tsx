@@ -40,7 +40,7 @@ export function Contact() {
         >
           <h2 className="mb-6 text-[40px]">Lass uns zusammenarbeiten</h2>
           <p className="text-[18px] text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Hast du ein Projekt im Kopf oder möchtest einfach nur Hallo sagen? Ich freue mich auf deine Nachricht!
+            Sie suchen nach Verstärkung für Ihr Team oder möchten sich über meine bisherigen Projekte austauschen? Ich freue mich auf Ihre Nachricht und ein persönliches Gespräch über potenzielle Möglichkeiten.
           </p>
         </motion.div>
 

@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { useState, useEffect } from 'react';
+import { Moon, Sun, Sparkles } from 'lucide-react';
 
 const navItems = [
   { label: 'Über mich', href: '#about' },
@@ -8,7 +9,14 @@ const navItems = [
   { label: 'Kontakt', href: '#contact' }
 ];
 
-export function Navigation() {
+interface Props {
+  darkMode: boolean;
+  onDarkModeChange: (val: boolean) => void;
+  sparks: boolean;
+  onSparksChange: (val: boolean) => void;
+}
+
+export function Navigation({ darkMode, onDarkModeChange, sparks, onSparksChange }: Props) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -45,7 +53,7 @@ export function Navigation() {
             DK
           </motion.a>
 
-          <div className="flex gap-8">
+          <div className="flex items-center gap-6">
             {navItems.map((item) => (
               <motion.a
                 key={item.label}
@@ -61,6 +69,31 @@ export function Navigation() {
                 {item.label}
               </motion.a>
             ))}
+
+            {/* Divider */}
+            <span className="w-px h-5 bg-border" />
+
+            {/* Sparks Toggle */}
+            <motion.button
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => onSparksChange(!sparks)}
+              title={sparks ? 'Funken deaktivieren' : 'Funken aktivieren'}
+              className={`p-1.5 rounded-lg transition-colors ${sparks ? 'text-yellow-400 hover:text-yellow-500' : 'text-foreground/40 hover:text-foreground'}`}
+            >
+              <Sparkles className="w-4 h-4" />
+            </motion.button>
+
+            {/* Dark Mode Toggle */}
+            <motion.button
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => onDarkModeChange(!darkMode)}
+              title={darkMode ? 'Light Mode' : 'Dark Mode'}
+              className="p-1.5 rounded-lg text-foreground/70 hover:text-foreground transition-colors"
+            >
+              {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </motion.button>
           </div>
         </div>
       </div>

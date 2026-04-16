@@ -1,5 +1,6 @@
-import { motion } from 'motion/react';
-import { ExternalLink, Github } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
 const projects = [
@@ -63,10 +64,36 @@ const projects = [
     ],
     liveLink: '',
     sourceLink: ''
+  },
+  {
+    title: 'Kommt bald',
+    description: 'Dieses Projekt befindet sich noch in Arbeit. Hier wird bald ein weiteres Projekt vorgestellt.',
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+    tags: ['In Arbeit'],
+    liveLink: '',
+    sourceLink: ''
   }
 ];
 
 export function Projects() {
+  const [page, setPage] = useState(0);
+  const [direction, setDirection] = useState(1);
+
+  const totalPages = Math.ceil(projects.length / 2);
+
+  function goTo(next: number) {
+    setDirection(next > page ? 1 : -1);
+    setPage(next);
+  }
+
+  const variants = {
+    enter: (dir: number) => ({ x: dir > 0 ? 80 : -80, opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (dir: number) => ({ x: dir > 0 ? -80 : 80, opacity: 0 }),
+  };
+
+  const pair = projects.slice(page * 2, page * 2 + 2);
+
   return (
     <section id="projects" className="min-h-screen flex items-center justify-center px-6 py-24 bg-secondary">
       <div className="max-w-6xl mx-auto w-full">
@@ -83,67 +110,111 @@ export function Projects() {
           </p>
         </motion.div>
 
-        <div className="space-y-12">
-          {projects.map((project, index) => (
+        {/* Slider */}
+        <div className="relative overflow-hidden">
+          <AnimatePresence mode="wait" custom={direction}>
             <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              viewport={{ once: true }}
-              className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl transition-shadow"
+              key={page}
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.4, ease: 'easeInOut' }}
+              className="space-y-6"
             >
-              <div className="flex flex-col md:flex-row md:max-h-64">
-                <div className="aspect-video md:aspect-auto md:w-2/5 flex-shrink-0">
-                  <ImageWithFallback
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="flex-1 p-6 md:py-8">
-                  <h3 className="mb-3 text-[24px]">{project.title}</h3>
-                  <p className="text-[16px] text-muted-foreground mb-4">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="bg-muted text-muted-foreground px-3 py-1 rounded-full text-[14px]"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  {'plugins' in project && project.plugins && (
-                    <ul className="mb-6 space-y-1">
-                      {project.plugins.map((p) => (
-                        <li key={p.name} className="text-[14px] text-muted-foreground">
-                          <span className="font-medium text-foreground">{p.name}:</span> {p.desc}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  <div className="flex gap-4">
-                    {project.liveLink && (
-                      <a href={project.liveLink} className="inline-flex items-center gap-2 text-primary hover:underline cursor-pointer">
-                        <ExternalLink className="w-4 h-4" />
-                        Live Demo
-                      </a>
-                    )}
+              {pair.map((project, i) => {
+                // Globaler Index bestimmt die Bildposition: gerade → Bild links, ungerade → Bild rechts
+                const globalIndex = page * 2 + i;
+                const imageRight = globalIndex % 2 === 1;
 
-                    {project.sourceLink && (
-                      <a href={project.sourceLink} className="inline-flex items-center gap-2 text-primary hover:underline cursor-pointer">
-                        <Github className="w-4 h-4" />
-                        Source Code
-                      </a>
-                    )}
+                return (
+                  <div
+                    key={project.title}
+                    className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl transition-shadow"
+                  >
+                    <div className={`flex flex-col md:flex-row md:max-h-64 ${imageRight ? 'md:flex-row-reverse' : ''}`}>
+                      <div className="aspect-video md:aspect-auto md:w-2/5 flex-shrink-0">
+                        <ImageWithFallback
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 p-6 md:py-8">
+                        <h3 className="mb-3 text-[24px]">{project.title}</h3>
+                        <p className="text-[16px] text-muted-foreground mb-4">
+                          {project.description}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {project.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="bg-muted text-muted-foreground px-3 py-1 rounded-full text-[14px]"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        {'plugins' in project && project.plugins && (
+                          <ul className="mb-4 space-y-1">
+                            {project.plugins.map((p) => (
+                              <li key={p.name} className="text-[14px] text-muted-foreground">
+                                <span className="font-medium text-foreground">{p.name}:</span> {p.desc}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                        <div className="flex gap-4">
+                          {project.liveLink && (
+                            <a href={project.liveLink} className="inline-flex items-center gap-2 text-primary hover:underline cursor-pointer">
+                              <ExternalLink className="w-4 h-4" />
+                              Live Demo
+                            </a>
+                          )}
+                          {project.sourceLink && (
+                            <a href={project.sourceLink} className="inline-flex items-center gap-2 text-primary hover:underline cursor-pointer">
+                              <Github className="w-4 h-4" />
+                              Source Code
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
+                );
+              })}
             </motion.div>
-          ))}
+          </AnimatePresence>
+        </div>
+
+        {/* Navigation */}
+        <div className="flex items-center justify-center gap-6 mt-10">
+          <button
+            onClick={() => goTo(page - 1)}
+            disabled={page === 0}
+            className="p-2 rounded-full border border-border bg-card hover:bg-muted transition disabled:opacity-30 disabled:cursor-not-allowed"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          <div className="flex gap-2">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                className={`w-2.5 h-2.5 rounded-full transition-all ${i === page ? 'bg-primary w-6' : 'bg-muted-foreground/40'}`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={() => goTo(page + 1)}
+            disabled={page === totalPages - 1}
+            className="p-2 rounded-full border border-border bg-card hover:bg-muted transition disabled:opacity-30 disabled:cursor-not-allowed"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </section>
