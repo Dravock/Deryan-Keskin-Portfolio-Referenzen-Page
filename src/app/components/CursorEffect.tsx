@@ -34,17 +34,14 @@ export function CursorEffect() {
     resize();
     window.addEventListener('resize', resize);
 
-    function onMove(e: MouseEvent) {
-      mouse.current = { x: e.clientX, y: e.clientY };
-
-      // Spawn 4-6 sparks per move
+    function spawnSparks(x: number, y: number) {
       const count = 5;
       for (let i = 0; i < count; i++) {
         const angle = Math.random() * Math.PI * 2;
         const speed = Math.random() * 3 + 1;
         sparks.current.push({
-          x: e.clientX,
-          y: e.clientY,
+          x,
+          y,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed - 1.5,
           life: 1,
@@ -55,7 +52,20 @@ export function CursorEffect() {
       }
     }
 
+    function onMove(e: MouseEvent) {
+      mouse.current = { x: e.clientX, y: e.clientY };
+      spawnSparks(e.clientX, e.clientY);
+    }
+
+    function onTouch(e: TouchEvent) {
+      for (let i = 0; i < e.touches.length; i++) {
+        spawnSparks(e.touches[i].clientX, e.touches[i].clientY);
+      }
+    }
+
     window.addEventListener('mousemove', onMove);
+    window.addEventListener('touchmove', onTouch, { passive: true });
+    window.addEventListener('touchstart', onTouch, { passive: true });
 
     function loop() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -91,6 +101,8 @@ export function CursorEffect() {
     return () => {
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('touchmove', onTouch);
+      window.removeEventListener('touchstart', onTouch);
       cancelAnimationFrame(rafRef.current);
     };
   }, []);

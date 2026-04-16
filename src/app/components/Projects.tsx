@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
@@ -73,8 +73,19 @@ const projects = [
 export function Projects() {
   const [page, setPage] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [pageSize, setPageSize] = useState(() => window.innerWidth >= 1024 ? 2 : 1);
 
-  const totalPages = Math.ceil(projects.length / 2);
+  useEffect(() => {
+    const onResize = () => {
+      const newSize = window.innerWidth >= 1024 ? 2 : 1;
+      setPageSize(newSize);
+      setPage(0);
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  const totalPages = Math.ceil(projects.length / pageSize);
 
   function goTo(next: number) {
     setDirection(next > page ? 1 : -1);
@@ -87,7 +98,7 @@ export function Projects() {
     exit: (dir: number) => ({ x: dir > 0 ? -80 : 80, opacity: 0 }),
   };
 
-  const pair = projects.slice(page * 2, page * 2 + 2);
+  const pair = projects.slice(page * pageSize, page * pageSize + pageSize);
 
   return (
     <section id="projects" className="min-h-screen flex items-center justify-center px-6 py-24 bg-secondary">
@@ -129,7 +140,7 @@ export function Projects() {
                     className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl transition-shadow"
                   >
                     <div className={`flex flex-col md:flex-row md:max-h-64 ${imageRight ? 'md:flex-row-reverse' : ''}`}>
-                      <div className="aspect-video md:aspect-auto md:w-2/5 flex-shrink-0">
+                      <div className="h-48 md:h-auto md:aspect-auto md:w-2/5 flex-shrink-0 overflow-hidden">
                         <ImageWithFallback
                           src={project.image}
                           alt={project.title}

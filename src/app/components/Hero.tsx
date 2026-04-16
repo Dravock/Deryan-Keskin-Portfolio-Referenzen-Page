@@ -1,6 +1,5 @@
 import { motion } from 'motion/react';
 import { ArrowDown } from 'lucide-react';
-import './../../styles/hero-gradient.css';
 
 export function Hero() {
   return (

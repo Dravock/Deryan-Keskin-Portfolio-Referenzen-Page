@@ -41,7 +41,8 @@ export function Navigation({ darkMode, onDarkModeChange, sparks, onSparksChange 
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 py-4">
+      <div className="max-w-6xl mx-auto px-6 py-3 relative">
+        {/* Row 1: Logo + Settings */}
         <div className="flex items-center justify-between">
           <motion.a
             href="#"
@@ -55,26 +56,7 @@ export function Navigation({ darkMode, onDarkModeChange, sparks, onSparksChange 
             DK
           </motion.a>
 
-          <div className="flex items-center gap-6">
-            {navItems.map((item) => (
-              <motion.a
-                key={item.label}
-                href={item.href}
-                className="text-[16px] text-foreground/70 hover:text-foreground transition-colors"
-                whileHover={{ y: -2 }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  const element = document.querySelector(item.href);
-                  element?.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                {item.label}
-              </motion.a>
-            ))}
-
-            {/* Divider */}
-            <span className="w-px h-5 bg-border" />
-
+          <div className="flex items-center gap-2">
             {/* Sparks Toggle */}
             <motion.button
               whileHover={{ scale: 1.15 }}
@@ -96,6 +78,27 @@ export function Navigation({ darkMode, onDarkModeChange, sparks, onSparksChange 
             >
               {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </motion.button>
+          </div>
+        </div>
+
+        {/* Row 2: Navigation (mobile: wrap, desktop: single row rechts) */}
+        <div className="flex items-center justify-between mt-2 lg:mt-0 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-1/2 lg:-translate-x-1/2">
+          <div className="flex items-center gap-4 lg:gap-6 flex-wrap w-full justify-around">
+            {navItems.map((item) => (
+              <motion.a
+                key={item.label}
+                href={item.href}
+                className="text-[15px] lg:text-[16px] text-foreground/70 hover:text-foreground transition-colors"
+                whileHover={{ y: -2 }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const element = document.querySelector(item.href);
+                  element?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                {item.label}
+              </motion.a>
+            ))}
           </div>
         </div>
       </div>
