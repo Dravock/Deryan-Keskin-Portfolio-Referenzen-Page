@@ -41,7 +41,9 @@ export function Navigation({ darkMode, onDarkModeChange, sparks, onSparksChange 
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 py-4">
+      <div className="max-w-6xl mx-auto px-6 py-3">
+
+        {/* Zeile 1: Logo + Toggles (immer sichtbar) */}
         <div className="flex items-center justify-between">
           <motion.a
             href="#"
@@ -55,25 +57,26 @@ export function Navigation({ darkMode, onDarkModeChange, sparks, onSparksChange 
             DK
           </motion.a>
 
-          <div className="flex items-center gap-6">
-            {navItems.map((item) => (
-              <motion.a
-                key={item.label}
-                href={item.href}
-                className="text-[16px] text-foreground/70 hover:text-foreground transition-colors"
-                whileHover={{ y: -2 }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  const element = document.querySelector(item.href);
-                  element?.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                {item.label}
-              </motion.a>
-            ))}
-
-            {/* Divider */}
-            <span className="w-px h-5 bg-border" />
+          <div className="flex items-center gap-2">
+            {/* Nav-Links: nur auf Desktop inline */}
+            <div className="hidden lg:flex items-center gap-6 mr-4">
+              {navItems.map((item) => (
+                <motion.a
+                  key={item.label}
+                  href={item.href}
+                  className="text-[16px] text-foreground/70 hover:text-foreground transition-colors"
+                  whileHover={{ y: -2 }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const element = document.querySelector(item.href);
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  {item.label}
+                </motion.a>
+              ))}
+              <span className="w-px h-5 bg-border" />
+            </div>
 
             {/* Sparks Toggle */}
             <motion.button
@@ -98,6 +101,26 @@ export function Navigation({ darkMode, onDarkModeChange, sparks, onSparksChange 
             </motion.button>
           </div>
         </div>
+
+        {/* Zeile 2: Nav-Links nur auf Mobile */}
+        <div className="flex lg:hidden items-center justify-around mt-2 flex-wrap gap-y-1">
+          {navItems.map((item) => (
+            <motion.a
+              key={item.label}
+              href={item.href}
+              className="text-[15px] text-foreground/70 hover:text-foreground transition-colors"
+              whileHover={{ y: -2 }}
+              onClick={(e) => {
+                e.preventDefault();
+                const element = document.querySelector(item.href);
+                element?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              {item.label}
+            </motion.a>
+          ))}
+        </div>
+
       </div>
     </motion.nav>
   );
